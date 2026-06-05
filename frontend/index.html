@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Startup Office Simulator</title>
+  <link rel="stylesheet" href="/ui/assets/styles.css" />
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Startup Office Simulator</h1>
+      <p>初创互联网公司办公室：成员由 DeepSeek 独立并行生成下一段行动。WASD 移动，靠近同事按 E 对话。</p>
+    </div>
+    <div class="toolbar">
+      <input id="playerName" value="候选人" maxlength="32" />
+      <button id="tickBtn">推进 1 分钟</button>
+      <button id="llmTickBtn">并行决策一次</button>
+      <button id="autoBtn">开始上班</button>
+      <button id="standupBtn">站会纪要</button>
+      <button id="resetBtn" class="secondary">重置运行态</button>
+      <a href="/office/parallel-decision-stats" target="_blank">并行统计</a>
+      <a href="/docs" target="_blank">接口文档</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="game-card">
+      <canvas id="office" width="1080" height="620"></canvas>
+      <div id="hint">正在打开办公室...</div>
+      <div id="simBadge">运行：暂停</div>
+    </section>
+    <aside>
+      <h2>服务状态</h2>
+      <div id="llmStatus"></div>
+      <h2>成员状态</h2>
+      <div id="status"></div>
+      <h2>成员动态</h2>
+      <div id="traces"></div>
+      <h2>工作看板</h2>
+      <div id="tasks"></div>
+      <h2>办公室记录</h2>
+      <div id="events"></div>
+      <h2>相关记忆</h2>
+      <div id="memories"></div>
+    </aside>
+  </main>
+
+  <dialog id="chatDialog">
+    <form method="dialog" class="chat-box">
+      <div class="chat-header">
+        <div>
+          <h2 id="chatNpcName">成员</h2>
+          <p id="chatNpcRole"></p>
+        </div>
+        <button id="closeChat" value="cancel">×</button>
+      </div>
+      <div id="chatLog" class="chat-log"></div>
+      <div class="chat-input-row">
+        <input id="chatInput" placeholder="例如：请从面试官角度追问这个项目，或帮我解释自主移动的实现" />
+        <button id="sendBtn" type="button">发送</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="/ui/assets/app.js"></script>
+</body>
+</html>
