@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CyberOffice Tycoon｜智能公司模拟器</title>
+  <link rel="stylesheet" href="/ui/assets/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-block">
+        <div class="brand-mark">CO</div>
+        <div>
+          <div class="eyebrow">Founder Command Center</div>
+          <h1>CyberOffice Tycoon</h1>
+          <p>你是老板。发布项目目标，让 Agent 团队自行拆分、协作、调用工具、交付报告。</p>
+        </div>
+      </div>
+      <div class="toolbar command-bar">
+        <input id="playerName" value="老板" maxlength="32" aria-label="老板名称" />
+        <button id="bossTaskBtn" class="primary-action">发布项目</button>
+        <button id="missionReportBtn">生成报告</button>
+        <button id="tickBtn">推进 1 分钟</button>
+        <button id="llmTickBtn">团队决策</button>
+        <button id="autoBtn">开始经营</button>
+        <button id="standupBtn">站会</button>
+        <button id="companyBtn">公司循环</button>
+        <button id="resetBtn" class="secondary">重置</button>
+      </div>
+      <nav class="link-dock" aria-label="系统入口">
+        <a href="/company/status" target="_blank">公司</a>
+        <a href="/company/resources" target="_blank">资源</a>
+        <a href="/company/dynamic-tools" target="_blank">工具</a>
+        <a href="/office/tool-audit" target="_blank">审计</a>
+        <a href="/knowledge/docs" target="_blank">知识库</a>
+        <a href="/docs" target="_blank">API</a>
+      </nav>
+    </header>
+
+    <section class="dashboard-strip">
+      <div class="stat-pill"><span>CEO Mode</span><b>老板主导</b></div>
+      <div class="stat-pill"><span>Runtime</span><b id="simBadge">暂停</b></div>
+      <div class="stat-pill"><span>Controls</span><b>WASD 移动 · E 对话</b></div>
+      <div class="stat-pill"><span>Loop</span><b>思考 → 工具 → 执行 → 报告</b></div>
+    </section>
+
+    <main>
+      <section class="game-card">
+        <div class="canvas-frame">
+          <canvas id="office" width="1080" height="620"></canvas>
+        </div>
+        <div id="hint">正在进入公司总部...</div>
+      </section>
+
+      <aside class="side-console">
+        <section class="panel-block">
+          <h2>服务状态</h2>
+          <div id="llmStatus"></div>
+        </section>
+        <section class="panel-block highlight-panel">
+          <h2>老板项目</h2>
+          <div id="bossPanel"></div>
+        </section>
+        <section class="panel-block">
+          <h2>公司智能体</h2>
+          <div id="companyStatus"></div>
+        </section>
+        <section class="panel-block">
+          <h2>内部共享资源</h2>
+          <div id="resources"></div>
+        </section>
+        <section class="panel-block">
+          <h2>成员状态</h2>
+          <div id="status"></div>
+        </section>
+        <section class="panel-block">
+          <h2>成员动态</h2>
+          <div id="traces"></div>
+        </section>
+        <section class="panel-block">
+          <h2>工作看板</h2>
+          <div id="tasks"></div>
+        </section>
+        <section class="panel-block">
+          <h2>办公室记录</h2>
+          <div id="events"></div>
+        </section>
+        <section class="panel-block">
+          <h2>相关记忆</h2>
+          <div id="memories"></div>
+        </section>
+      </aside>
+    </main>
+
+    <dialog id="bossDialog">
+      <form method="dialog" class="chat-box boss-box">
+        <div class="chat-header">
+          <div>
+            <div class="eyebrow">Mission Brief</div>
+            <h2>发布公司级项目</h2>
+            <p>Agent 团队会自行拆分任务、决定是否调用工具，并在完成后沉淀报告。</p>
+          </div>
+          <button id="closeBossDialog" value="cancel">×</button>
+        </div>
+        <div class="boss-form">
+          <label>项目标题 <input id="bossTaskTitle" placeholder="例如：开发一个完全智能的公司模拟游戏" /></label>
+          <label>项目背景 <textarea id="bossTaskDesc" placeholder="说明你想让公司完成什么、需要哪些效果、有哪些限制"></textarea></label>
+          <label>交付标准 <textarea id="bossTaskOutcome" placeholder="例如：可演示闭环、共享资源、完整任务报告、可回滚机制"></textarea></label>
+          <button id="submitBossTaskBtn" type="button">提交给 Agent 团队</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="chatDialog">
+      <form method="dialog" class="chat-box">
+        <div class="chat-header">
+          <div>
+            <div class="eyebrow">1:1 Conversation</div>
+            <h2 id="chatNpcName">成员</h2>
+            <p id="chatNpcRole"></p>
+          </div>
+          <button id="closeChat" value="cancel">×</button>
+        </div>
+        <div id="chatLog" class="chat-log"></div>
+        <div class="chat-input-row">
+          <input id="chatInput" placeholder="给这位成员下达建议、追问思路或要求补充说明" />
+          <button id="sendBtn" type="button">发送</button>
+        </div>
+      </form>
+    </dialog>
+  </div>
+
+  <script src="/ui/assets/app.js"></script>
+</body>
+</html>
